@@ -1,6 +1,8 @@
+from typing import Any, List, Optional, Type, TypeVar, Generic
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import Any, Type, TypeVar, Generic
+from sqlalchemy.future import select
 from sqlalchemy.orm import as_declarative, declared_attr
+from sqlalchemy import func
 
 T = TypeVar("T", bound="Base")
 
@@ -36,8 +38,28 @@ class BaseRepository(Generic[T]):
         await db.refresh(db_obj)
         return db_obj
 
-    async def remove(self, db: AsyncSession, id: int) -> T:
+    async def remove(self, db: AsyncSession, id: Any) -> T:
         obj = await db.get(self.model, id)
         await db.delete(obj)
         await db.commit()
         return obj
+
+    async def list(
+        self,
+        db: AsyncSession,
+        offset: int = 0,
+        limit: int = 100,
+        name: Optional[str] = None,
+        type_: Optional[str] = None,
+    ) -> List[T]:
+        query = select(self.model).offset(offset).limit(limit)
+        if name:
+            query = query.where(self.model.name.ilike(f"%{name}%"))
+        if type_:
+            query = query.where(self.model.type.contains([type_]))
+        result = await db.execute(query)
+        return result.scalars().all()
+
+    async def count(self, db: AsyncSession) -> int:
+        result = await db.execute(select(func.count()).select_from(self.model))
+        return result.scalar()
