@@ -1,0 +1,163 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.egg
+*.egg-info/
+dist/
+build/
+*.pyc
+*.pyo
+*.pyd
+*.whl
+*.par
+
+# C extensions
+*.so
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+*.pid
+*.err
+*.out
+
+# Pytest
+.cache/
+.pytest_cache/
+.pytest_cache/*
+
+# Pyre type checker
+.pyre/
+
+# Mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pylint
+.pylint.d/
+
+# Environments
+.env
+.env.*
+.venv
+.venv.*
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# PyDev project settings
+/.metadata/
+
+# Pycharm project settings
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# VS Code
+.vscode/
+
+# ALEMBIC
+alembic/versions/*.pyc
+
+# Database
+*.sqlite
+*.db
+
+# Logs
+*.log
+*.sqlite3
+
+# Local History
+.local_history/
+
+# Docker
+*.log
+docker-compose.override.yml
+Dockerfile*
+
+# pyright
+pyrightconfig.json
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# node
+node_modules/
+
+# Lock files
+poetry.lock
+Pipfile.lock
+
+# Coverage
+coverage/
+
+# Cache
+cache/
+*.cache
+
+# Backup files
+*.bak
+*.swp
+*.tmp
+*~
+
+# Secret files
+secret.py
+*.key
+*.pem
