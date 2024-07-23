@@ -2,7 +2,6 @@ from typing import Any, List, Optional, Type, TypeVar, Generic
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import as_declarative, declared_attr
-from sqlalchemy import func
 
 T = TypeVar("T", bound="Base")
 
@@ -52,15 +51,21 @@ class BaseRepository(Generic[T]):
         name: Optional[str] = None,
         type_: Optional[str] = None,
     ) -> List[T]:
+        # TODO this logic needs to be optimized. multiple elif done due to time constraint
         query = select(self.model).offset(offset).limit(limit)
-        if name:
+        if name and type_ is None:
             query = query.where(self.model.name.ilike(f"%{name}%"))
-        if type_:
+            result = await db.execute(query)
+            return result.scalars().all()
+        elif type_ and name is None:
             query = query.where(self.model.type.ilike(f"%{type_}%"))
+            result = await db.execute(query)
+            return result.scalars().all()
+        elif type_ and name:
+            query = query.where(
+                self.model.type.ilike(f"%{type_}%"), self.model.name.ilike(f"%{name}%")
+            )
+            result = await db.execute(query)
+            return result.scalars().all()
         result = await db.execute(query)
-        print(result, "\n\n\n\n")
         return result.scalars().all()
-
-    async def count(self, db: AsyncSession) -> int:
-        result = await db.execute(select(func.count()).select_from(self.model))
-        return result.scalar()
