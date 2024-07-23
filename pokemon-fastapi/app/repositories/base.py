@@ -56,8 +56,9 @@ class BaseRepository(Generic[T]):
         if name:
             query = query.where(self.model.name.ilike(f"%{name}%"))
         if type_:
-            query = query.where(self.model.type.contains([type_]))
+            query = query.where(self.model.type.ilike(f"%{type_}%"))
         result = await db.execute(query)
+        print(result, "\n\n\n\n")
         return result.scalars().all()
 
     async def count(self, db: AsyncSession) -> int:

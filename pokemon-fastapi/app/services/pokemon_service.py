@@ -30,5 +30,5 @@ class PokemonService:
         return await self.listing_repository.get_by_type(db, type_=type_)
 
     async def create_pokemon(self, db: AsyncSession, pokemon: PokemonCreate) -> Pokemon:
-        db_pokemon = Pokemon(**pokemon.dict())
+        db_pokemon = Pokemon(**pokemon.__dict__)
         return await self.listing_repository.create(db, db_pokemon)
